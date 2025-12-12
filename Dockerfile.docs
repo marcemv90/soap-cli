@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+WORKDIR /docs
+
+# Install MkDocs (with recommended extras, including watchdog) and the Material theme
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir "mkdocs[recommended]" mkdocs-material
+
+# Expect mkdocs.yml and docs/ to be mounted into /docs at runtime
+
+EXPOSE 8000
+
+# By default, run the live-reload dev server
+CMD ["mkdocs", "serve", "--livereload", "-a", "0.0.0.0:8000", "-w", "/docs/docs", "-w", "/docs/mkdocs.yml"]
